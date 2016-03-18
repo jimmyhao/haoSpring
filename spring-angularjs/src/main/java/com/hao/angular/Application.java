@@ -1,8 +1,14 @@
 package com.hao.angular;
 
+import com.hao.angular.domain.User;
+import com.hao.angular.service.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 
@@ -11,6 +17,8 @@ import java.util.Arrays;
  */
 @SpringBootApplication
 public class Application {
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args){
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         /*
@@ -21,5 +29,25 @@ public class Application {
             System.out.println(beanName);
         }
         */
+    }
+    @Bean
+    public CommandLineRunner demo(UserRepository repository) {
+        return (args) -> {
+            // save a couple of customers
+            repository.save(new User("Jack", "Bauer"));
+            repository.save(new User("Chloe", "O'Brian"));
+            repository.save(new User("Kim", "Bauer"));
+            repository.save(new User("David", "Palmer"));
+            repository.save(new User("Michelle", "Dessler"));
+
+            // fetch all customers
+            log.info("Customers found with findAll():");
+            log.info("-------------------------------");
+            for (User customer : repository.findAll()) {
+                log.info(customer.toString());
+            }
+            log.info("");
+
+        };
     }
 }

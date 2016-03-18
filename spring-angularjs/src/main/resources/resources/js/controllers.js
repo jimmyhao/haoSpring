@@ -30,4 +30,42 @@ angular.module('myApp.controllers', [])
         $scope.entities = data;
       });
   }])
+
+ .controller('Page4Ctrl', ['$scope', 'TestEntityFactory', function($scope, TestEntityFactory) {
+      $scope.user={id:null, firstName:'', lastName:''};
+      $scope.entities =[];
+      $scope.fetchAllUsers = function(){
+        TestEntityFactory.findAllTestEntity().then(
+            function(data){
+                $scope.entities = data;
+            },
+            function(errResponse){ console.error('Error while fetching Currencies'); }
+        );
+      };
+      $scope.fetchAllUsers();
+
+       //add an entity
+        $scope.createUser = function(user){
+            TestEntityFactory.createTestEntity(user).then(
+                function(data){
+                    console.log('retrieve all');
+                    $scope.fetchAllUsers();
+                },
+                function(errResponse){ console.error('Error while fetching Currencies'); }
+            );
+
+        };
+        $scope.reset = function(){
+          $scope.user={id:null, firstName:'', lastName:''};
+          $scope.myForm.$setPristine();
+        };
+
+        $scope.submit= function(){
+            if($scope.user.id == null){
+                console.log('saving new user', $scope.user);
+                $scope.createUser($scope.user);
+            }
+            $scope.reset();
+        };
+  }])
 ;
