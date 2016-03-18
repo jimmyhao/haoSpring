@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Enable annotation scanning. -->
+    <context:annotation-config />
+
+    <context:component-scan base-package="com.hao.services"/>
+    <tx:annotation-driven />
+
+    <!-- DataSource -->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+        <property name="driverClassName" value="org.sqlite.JDBC"/>
+        <property name="url" value="jdbc:sqlite:money.db" />
+        <property name="initialSize" value="2" />
+        <property name="maxActive" value="20" />
+        <property name="maxIdle" value="5" />
+        <property name="poolPreparedStatements" value="true" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+
+        <!-- configLocation is used to specify the location of the MyBatis XML configuration file.  -->
+        <property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml" />
+
+        <!--
+            The mapperLocations property takes a list of resource locations.
+            This property can be used to specify the location of MyBatis XML mapper files
+            <property name="mapperLocations" value="classpath*:com/hmkcode/spring/mybatis/Mapper.xml" />
+        -->
+    </bean>
+
+    <bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean" >
+        <property name="mapperInterface" value="com.hao.services.repository.mybatis.mapper.Mapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
+</beans>

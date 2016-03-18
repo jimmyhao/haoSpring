@@ -1,0 +1,60 @@
+<div ng-controller="Page2Ctrl">
+
+  <div class="jumbotron">
+    <h1>Page2</h1>
+    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <div ng-cloak="ng-cloak">
+      <p>entity3</p>
+      <ul>
+        <li>ID: {{entity3.id}}</li>
+        <li>Name: {{entity3.name}}</li>
+        <li>E-Mail: {{entity3.email}}</li>
+      </ul>
+    </div>
+    <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+  </div>
+
+
+  <div class="row" ng-cloak="ng-cloak">
+    <form ng-submit="Page2Ctrl.submit()">
+      <input type="text" ng-model="user.name"/>
+      <input type="text" ng-model="user.email"/>
+      <input type="submit" value="Submit"/>
+    </form>
+    <div class="col-xs-12">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <!--Buttons column-->
+          <th style="width: 100px;">
+          <!--Add + Cancel-->
+          <div class="btn-toolbar"><i class="btn glyphicon glyphicon-plus" ng-click="toggleAddMode()" title="Add" ng-hide="addMode"></i></div>
+          <div class="btn-toolbar"><i class="btn glyphicon glyphicon-minus" ng-click="toggleAddMode()" title="Cancel" ng-show="addMode"></i></div>
+        </th>
+          <th>#</th>
+          <th>Name</th>
+          <th>E-Mail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="en in ents" ng-click="setSelected(en)">
+          <!--Buttons column-->
+          <td>
+            <div class="btn-toolbar">
+              <!--Create + Cancel-->
+              <div class="btn-group">
+                <i class="btn glyphicon glyphicon-floppy-disk" ng-click="createItem()" title="Create" ng-disabled="addForm.$invalid"></i>
+                <i class="btn glyphicon glyphicon-remove" ng-click="toggleAddMode()" title="Cancel"></i>
+              </div>
+            </div>
+          </td>
+          <td>{{en.id}}</td>
+          <td>{{en.name}}</td>
+          <td>{{en.email}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

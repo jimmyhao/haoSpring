@@ -1,0 +1,28 @@
+<div ng-controller="Page3Ctrl">
+
+  <div class="jumbotron">
+    <h1>Page3</h1>
+    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  </div>
+
+  <div class="row" ng-cloak="ng-cloak">
+    <div class="col-xs-12">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>E-Mail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="ent in entities">
+            <td>{{ent.id}}</td>
+            <td>{{ent.name}}</td>
+            <td>{{ent.email}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
